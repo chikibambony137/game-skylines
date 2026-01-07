@@ -1,0 +1,1 @@
+export type numberList = [number, Array<number>, number];
