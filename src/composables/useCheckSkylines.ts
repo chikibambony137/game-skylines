@@ -51,7 +51,7 @@ const lineCheck = (
   maxTowerValue: number
 ) => {
   // 1) dublicate check
-  if (!dublicateCheck(towers)) return false;
+  if (!duplicateCheck(towers)) return false;
   // 2) null check
   if (!nullCheck(towers)) return false;
 
@@ -63,11 +63,11 @@ const lineCheck = (
 };
 
 // проверка на дубликаты
-const dublicateCheck = (towers: Array<number>): boolean => {
+const duplicateCheck = (towers: Array<number>): boolean => {
   let uniqueTowers = new Set(towers);
 
   if (uniqueTowers.size !== towers.length) {
-    console.log("Dublicate error");
+    console.log("Duplicate error");
     return false;
   }
   return true;
