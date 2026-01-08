@@ -4,39 +4,46 @@ export function useCheckSkylines(
   grid: Array<numberList>,
   maxTowerValue: number
 ) {
-  /**
-   * 1) проверить все строки
-   * 2) проверить все столбцы
-   */
+  if (rowCheck(grid, maxTowerValue) && colCheck(grid, maxTowerValue))
+    return true;
+  else return false;
+}
 
-  // ROW CHECK
+const rowCheck = (grid: Array<numberList>, maxTowerValue: number): boolean => {
   for (let i = 1; i < grid.length - 1; i += 1) {
+    // from left to right check
     if (grid[i]![0] !== 0)
       if (!lineCheck(grid[i]![0], grid[i]![1], maxTowerValue)) return false;
+    // from right to left check
     if (grid[i]![2] !== 0)
       if (!lineCheck(grid[i]![2], [...grid[i]![1]].reverse(), maxTowerValue))
         return false;
   }
+  return true;
+};
 
-  // COL CHECK
+const colCheck = (grid: Array<numberList>, maxTowerValue: number) => {
   for (let i = 0; i < maxTowerValue; i += 1) {
+    // init towers in column by i
     let towers: Array<number> = [];
     for (let j = 1; j < grid.length - 1; j += 1) {
       towers.push(grid[j]![1][i]!);
     }
 
+    // from top to bottom check
     if (grid[0]![1][i]! !== 0)
       if (!lineCheck(grid[0]![1][i]!, towers, maxTowerValue)) return false;
 
+    // from bottom to top check
     // @ts-ignore - arr.at(-1) ????
-    if (grid.at(-1)[1][i]! !== 0)
-    // @ts-ignore - arr.at(-1) ????
+    if (grid.at(-1)[1][i]! !== 0) {
+      // @ts-ignore - arr.at(-1) ????
       if (!lineCheck(grid.at(-1)[1][i]!, [...towers].reverse(), maxTowerValue))
         return false;
+    }
   }
-
   return true;
-}
+};
 
 const lineCheck = (
   visibleTowers: number,
