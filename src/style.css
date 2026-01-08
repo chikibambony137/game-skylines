@@ -7,3 +7,13 @@
   background-color: #202124;
   color: white;
 }
+
+input {
+  justify-items: center;
+  align-items: center;
+
+  color: white;
+
+  background-color: #1b1c1e;
+  border: 0;
+}

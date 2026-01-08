@@ -1,28 +1,30 @@
 <template>
   <div class="grid">
-    <button @click="checkTowers">Check</button>
-    <span v-for="p in preset[0]?.[1]">{{ p }}</span>
-    <span>Level {{ level }}</span>
+    <span class="grid__level"></span>
+    <span class="grid__hint grid__hint_top" v-for="p in preset[0]?.[1]">{{ p }}</span>
+    <span class="grid__level"></span>
 
     <template v-for="(row, rowIndex) in maxTowerValue" :key="rowIndex">
-      <span>{{ preset[row]?.[0] }}</span>
+      <span class="grid__hint grid__hint_left">{{ preset[row]?.[0] }}</span>
 
       <input
-        class="game__input"
+        class="grid__input"
         v-for="(col, colIndex) in preset[row]?.[1]"
         :key="colIndex"
         v-model.number="res[rowIndex + 1]![1][colIndex]"
         :name="col.toString()"
         type="number"
-        min="0"
-        :max="maxTowerValue" />
+        readonly
+        @click="buildTower(rowIndex, colIndex)" />
 
-      <span>{{ preset[row]?.[2] }}</span>
+      <span class="grid__hint grid__hint_right">{{ preset[row]?.[2] }}</span>
     </template>
 
-    <span>Level {{ level }}</span>
-    <span v-for="p in preset[maxTowerValue + 1]?.[1]">{{ p }}</span>
-    <span>Level {{ level }}</span>
+    <span class="grid__level"></span>
+    <span class="grid__hint grid__hint_bottom" v-for="p in preset[maxTowerValue + 1]?.[1]">{{
+      p
+    }}</span>
+    <span class="grid__level"></span>
   </div>
 </template>
 
@@ -48,9 +50,25 @@ const props = defineProps({
     type: Array<numberList>,
     required: true,
   },
+
+  isCheckTowers: {
+    type: Boolean,
+    required: true,
+  },
+
+  isResetLevel: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const res: Ref<numberList[]> = ref(JSON.parse(JSON.stringify(props.preset)));
+
+const buildTower = (rowIndex: number, colIndex: number) => {
+  if (res.value[rowIndex + 1]![1][colIndex]! < props.maxTowerValue)
+    res.value[rowIndex + 1]![1][colIndex]! += 1;
+  else res.value[rowIndex + 1]![1][colIndex]! = 0;
+};
 
 watch(
   () => props.preset,
@@ -61,14 +79,53 @@ watch(
   { deep: true, immediate: true }
 );
 
-const checkTowers = () => {
-  if (useCheckSkylines(res.value, props.maxTowerValue)) alert('УРААААААААААААА!');
-  else alert("ХУЙНЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯ!");
-};
+watch(
+  () => props.isCheckTowers,
+  () => {
+    if (useCheckSkylines(res.value, props.maxTowerValue))
+      alert("УРААААААААААААА!");
+    else alert("ХУЙНЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯ!");
+  }
+);
+
+watch(
+  () => props.isResetLevel,
+  () => {
+    res.value = JSON.parse(JSON.stringify(props.preset));
+  }
+);
 </script>
 
 <style scoped>
-  input {
-    background-color: #1b1c1e;
-  }
+.grid {
+  justify-items: center;
+  align-items: center;
+
+  font-size: 24px;
+}
+
+.grid__input {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 10px;
+  font-size: 24px;
+
+  border: 2px solid rgb(23, 22, 22);
+  cursor: pointer;
+  user-select: none;
+}
+
+.grid__hint_top {
+  align-self: self-end;
+}
+.grid__hint_left {
+  justify-self: self-end;
+}
+.grid__hint_right {
+  justify-self: self-start;
+}
+.grid__hint_bottom {
+  align-self: self-start;
+}
 </style>

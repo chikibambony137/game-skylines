@@ -7,17 +7,22 @@
         type="number"
         min="1"
         max="3"
+        readonly
         v-model="level"
-        @input="switchPreset" />
+        @click="changeLevel" />
 
-        <button>Check</button>
+      <button @click="isCheckTowers = !isCheckTowers">Check</button>
+      <button @click="isResetLevel = !isResetLevel">Reset</button>
+      <button @click="switchPreset">Update</button>
     </div>
 
     <GameGrid
       class="game__grid"
       :maxTowerValue="maxTowerValue"
       :preset="currentPreset"
-      :level></GameGrid>
+      :level
+      :isCheckTowers
+      :isResetLevel></GameGrid>
   </div>
 </template>
 
@@ -39,11 +44,19 @@ watch(level, () => {
   maxTowerValue = level.value + 2;
   gridSize = (maxTowerValue + 2).toString();
   document.documentElement.style.setProperty("--gridSize", gridSize);
+
+  switchPreset();
 });
 
 const currentPreset: Ref<Array<numberList>> = ref(getRandomPreset(1));
 
+const changeLevel = () => {
+  if (level.value < 3) level.value += 1;
+  else level.value = 1;
+}
+
 const switchPreset = () => {
+
   switch (level.value) {
     case 1:
       currentPreset.value = getRandomPreset(1);
@@ -58,7 +71,9 @@ const switchPreset = () => {
       currentPreset.value = getRandomPreset(1);
   }
 };
-// tests
+
+const isCheckTowers: Ref<boolean> = ref(false);
+const isResetLevel: Ref<boolean> = ref(false);
 </script>
 
 <style scoped>
@@ -75,10 +90,16 @@ const switchPreset = () => {
 
 .bar {
   display: flex;
+  margin-bottom: 10px;
 }
 
 .bar__level-title {
   margin: 5px 10px;
+}
+
+.bar__level-input {
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .game__grid {
@@ -88,6 +109,6 @@ const switchPreset = () => {
   grid-column-gap: 20px;
   grid-row-gap: 20px;
 
-  border: 4px solid black;
+  border: 4px solid rgba(0, 0, 0, 0.173);
 }
 </style>
