@@ -9,6 +9,7 @@
 
       <input
         class="grid__input"
+        :style="{color: colorByValue(res[rowIndex + 1]![1][colIndex]!)}"
         v-for="(col, colIndex) in preset[row]?.[1]"
         :key="colIndex"
         v-model.number="res[rowIndex + 1]![1][colIndex]"
@@ -94,6 +95,18 @@ watch(
     res.value = JSON.parse(JSON.stringify(props.preset));
   }
 );
+
+const colorByValue = (value: number) => {
+  switch (value) {
+    case 0: return 'white';
+    case 1: return 'green';
+    case 2: return 'blue';
+    case 3: return 'yellow';
+    case 4: return 'orange';
+    case 5: return 'red';
+    default: return 'white';
+  }
+}
 </script>
 
 <style scoped>
@@ -102,6 +115,7 @@ watch(
   align-items: center;
 
   font-size: 24px;
+  user-select: none;
 }
 
 .grid__input {
