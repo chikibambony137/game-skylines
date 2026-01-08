@@ -1,19 +1,19 @@
 <template>
   <div class="game">
     <div class="game__bar bar">
-      <h2 class="bar__level-title">Level:</h2>
-      <input
-        class="bar__level-input"
-        type="number"
-        min="1"
-        max="3"
-        readonly
-        v-model="level"
-        @click="changeLevel" />
+      <button class="bar__button" @click="isResetLevel = !isResetLevel">
+        Reset
+      </button>
+      <button class="bar__button" @click="switchPreset">Update</button>
 
-      <button @click="isCheckTowers = !isCheckTowers">Check</button>
-      <button @click="isResetLevel = !isResetLevel">Reset</button>
-      <button @click="switchPreset">Update</button>
+      <div class="bar__level" @click="changeLevel">
+        <h2 class="bar__level-title">Level: {{ level }}</h2>
+      </div>
+
+      <button class="bar__button" @click="isCheckTowers = !isCheckTowers">
+        Check
+      </button>
+      <button class="bar__button" @click="changeLevel">Next level</button>
     </div>
 
     <GameGrid
@@ -53,10 +53,9 @@ const currentPreset: Ref<Array<numberList>> = ref(getRandomPreset(1));
 const changeLevel = () => {
   if (level.value < 3) level.value += 1;
   else level.value = 1;
-}
+};
 
 const switchPreset = () => {
-
   switch (level.value) {
     case 1:
       currentPreset.value = getRandomPreset(1);
@@ -90,16 +89,24 @@ const isResetLevel: Ref<boolean> = ref(false);
 
 .bar {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  user-select: none;
+}
+
+.bar__button {
+  width: 100px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.bar__level {
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0px 20px;
 }
 
 .bar__level-title {
   margin: 5px 10px;
-}
-
-.bar__level-input {
-  font-size: 16px;
-  cursor: pointer;
 }
 
 .game__grid {

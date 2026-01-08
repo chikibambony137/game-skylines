@@ -1,30 +1,36 @@
 <template>
   <div class="grid">
     <span class="grid__level"></span>
-    <span class="grid__hint grid__hint_top" v-for="p in preset[0]?.[1]">{{ p }}</span>
+    <span class="grid__hint grid__hint_top" v-for="p in preset[0]?.[1]">{{
+      p
+    }}</span>
     <span class="grid__level"></span>
 
     <template v-for="(row, rowIndex) in maxTowerValue" :key="rowIndex">
       <span class="grid__hint grid__hint_left">{{ preset[row]?.[0] }}</span>
 
-      <input
-        class="grid__input"
+      <div
+        class="grid__tower"
         :style="{color: colorByValue(res[rowIndex + 1]![1][colIndex]!)}"
         v-for="(col, colIndex) in preset[row]?.[1]"
         :key="colIndex"
-        v-model.number="res[rowIndex + 1]![1][colIndex]"
+        
         :name="col.toString()"
         type="number"
         readonly
-        @click="buildTower(rowIndex, colIndex)" />
+        @click="buildTower(rowIndex, colIndex)">
+        <p class="grid__tower-value">{{ res[rowIndex + 1]![1][colIndex] }}</p>
+      </div>
 
       <span class="grid__hint grid__hint_right">{{ preset[row]?.[2] }}</span>
     </template>
 
     <span class="grid__level"></span>
-    <span class="grid__hint grid__hint_bottom" v-for="p in preset[maxTowerValue + 1]?.[1]">{{
-      p
-    }}</span>
+    <span
+      class="grid__hint grid__hint_bottom"
+      v-for="p in preset[maxTowerValue + 1]?.[1]"
+      >{{ p }}</span
+    >
     <span class="grid__level"></span>
   </div>
 </template>
@@ -98,15 +104,22 @@ watch(
 
 const colorByValue = (value: number) => {
   switch (value) {
-    case 0: return 'white';
-    case 1: return 'green';
-    case 2: return 'blue';
-    case 3: return 'yellow';
-    case 4: return 'orange';
-    case 5: return 'red';
-    default: return 'white';
+    case 0:
+      return "white";
+    case 1:
+      return "green";
+    case 2:
+      return "blue";
+    case 3:
+      return "yellow";
+    case 4:
+      return "orange";
+    case 5:
+      return "red";
+    default:
+      return "white";
   }
-}
+};
 </script>
 
 <style scoped>
@@ -118,16 +131,20 @@ const colorByValue = (value: number) => {
   user-select: none;
 }
 
-.grid__input {
+.grid__tower {
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  padding-left: 10px;
-  font-size: 24px;
+  
+  justify-items: center;
+  align-content: center;
 
+  font-size: 30px;
+  font-weight: 700;
   border: 2px solid rgb(23, 22, 22);
   cursor: pointer;
   user-select: none;
+  background-color: rgba(28, 28, 28, 0.815);
 }
 
 .grid__hint_top {
