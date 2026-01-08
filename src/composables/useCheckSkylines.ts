@@ -14,7 +14,7 @@ export function useCheckSkylines(
     if (grid[i]![0] !== 0)
       if (!lineCheck(grid[i]![0], grid[i]![1], maxTowerValue)) return false;
     if (grid[i]![2] !== 0)
-      if (!lineCheck(grid[i]![2], grid[i]![1].reverse(), maxTowerValue))
+      if (!lineCheck(grid[i]![2], [...grid[i]![1]].reverse(), maxTowerValue))
         return false;
   }
 
@@ -31,7 +31,7 @@ export function useCheckSkylines(
     // @ts-ignore - arr.at(-1) ????
     if (grid.at(-1)[1][i]! !== 0)
     // @ts-ignore - arr.at(-1) ????
-      if (!lineCheck(grid.at(-1)[1][i]!, towers.reverse(), maxTowerValue))
+      if (!lineCheck(grid.at(-1)[1][i]!, [...towers].reverse(), maxTowerValue))
         return false;
   }
 

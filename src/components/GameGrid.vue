@@ -50,10 +50,8 @@ const props = defineProps({
   },
 });
 
-// Создаем ref и инициализируем
 const res: Ref<numberList[]> = ref(JSON.parse(JSON.stringify(props.preset)));
 
-// Правильное обновление res при изменении preset
 watch(
   () => props.preset,
   (newPreset) => {
