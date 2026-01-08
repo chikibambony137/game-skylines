@@ -67,4 +67,8 @@ const checkTowers = () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+  input {
+    background-color: #1b1c1e;
+  }
+</style>

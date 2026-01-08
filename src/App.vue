@@ -9,6 +9,8 @@
         max="3"
         v-model="level"
         @input="switchPreset" />
+
+        <button>Check</button>
     </div>
 
     <GameGrid
