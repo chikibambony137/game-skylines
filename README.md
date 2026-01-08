@@ -1,5 +1,22 @@
-# Vue 3 + TypeScript + Vite
+# Игра "Небоскрёбы"  
+ - в стиле судоку, но нужно расставить числа (небоскрёбы определённой высоты) в зависимости от количества видимых небоскрёбов по бокам  
+  
+ ## Стек:  
+ Vue (Composition API) + Vite + TypeScript  
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+ ## Установка:  
+ ```bash  
+ npm install  
+ npm run dev  
+ ```  
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+ ## Итоги проекта:  
+ - сделал легко расширяемую игру за счёт пресетов уровней (в теории можно добавлять, сколько душе угодно);  
+ - поигрался с TypeScript, сначала плевался, потом зашло;  
+ - решил не юзать излишние библиотеки и технологии по типу scss, Pinia и UI-библиотеки (который изначально установил), так как понял, что только больше возни будет;  
+ 
+ ## Что можно было улучшить:  
+ - можно было бы подумать о том, как генерировать решаемые пресеты (сначала генерировать решение, потом подсказки, а затем скрывать ненужное в зависимости от уровня);  
+ - стилистически можно бесконечно улучшать, оставил минималистичный дизайн, надо бы гриды подучить;  
+ - немного прибраться в SFC, за период разработки много лишнего мусора накопилось, мб выделить пару отдельных SFC;  
+ - сохранять прогресс в localStorage (мб потом сделаю aga).  
